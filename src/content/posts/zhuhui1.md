@@ -2,7 +2,7 @@
 title: 【九十天重启计划#0】万物的开端
 date: 2025-10-01
 summary: 铸造一场激昂的计划，锻出一段尝胆的生涯
-category: 神
+category: 短期规划
 tags: [逐晖计划]
 sticky: 1
 ---
