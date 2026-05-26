@@ -15,7 +15,7 @@ sticky: 1
 
 # 预期实现目标
 
-1. stewart并联型机器人的结构建模,并用urdf文件描述。
+1. stewart并联型机器人的结构建模,并用sdf文件描述。
 2. stewart并联型机器人逆运动学（inverse kinematics，以下简称ik）求解。
 3. 编写手柄控制程序，通过手柄控制gazebo中的机器人运动。
 4. 通过ROS通讯在gazebo中实现对机器人平台的运动仿真
@@ -91,7 +91,7 @@ Roll-Pitch-Yaw: Deriving the Rotation Matrix
 
 #### 一、核心前提：明确欧拉角的旋转顺序
 
-工程中最通用的旋转模式是 “绕参考坐标系的轴旋转”（固定轴旋转），其标准顺序及对应旋转矩阵定义如下：
+工程中最通用的旋转模式是 “绕参考坐标系的轴旋转”（即固定轴旋转），其标准顺序及对应旋转矩阵定义如下：
 
 - roll（滚转角，记为 $\phi$）：绕参考坐标系X轴旋转，对应旋转矩阵 $\boldsymbol{R}_x(\phi)$；
 
@@ -100,8 +100,8 @@ Roll-Pitch-Yaw: Deriving the Rotation Matrix
 - yaw（偏航角，记为 $\psi$）：绕参考坐标系Z轴旋转，对应旋转矩阵 $\boldsymbol{R}_z(\psi)$。
 
 固定轴旋转模式下，最终的旋转矩阵 $\boldsymbol{R}$ 是三个单轴旋转矩阵的右乘（旋转顺序：X→Y→Z），数学表达式为：
-
-$\boldsymbol{R} = \boldsymbol{R}_z(\psi) \cdot \boldsymbol{R}_y(\theta) \cdot \boldsymbol{R}_x(\phi)$
+$\boldsymbol{R} = \boldsymbol{R}_z(\psi) \cdot \boldsymbol{R}_y(\theta) \cdot \boldsymbol{R}_x(\phi)$  
+注记：针对固定轴旋转，后发生的旋转写在左边
 
 #### 二、单轴旋转矩阵公式（弧度制）
 
@@ -153,7 +153,7 @@ $\text{弧度} = \text{角度} \times \frac{\pi}{180.0}$
 
 旋转顺序直接决定旋转矩阵的结果，工程中需根据场景区分两种核心模式：
 
-- 固定轴（参考坐标系）：旋转轴始终为世界/基坐标系的X/Y/Z轴，旋转矩阵为 $\boldsymbol{R} = \boldsymbol{R}_z \cdot \boldsymbol{R}_y \cdot \boldsymbol{R}_x$；
+- 固定轴（参考坐标系）：旋转轴始终为世界/基坐标系的X/Y/Z轴，若旋转顺序为X→Y→Z，旋转矩阵为 $\boldsymbol{R} = \boldsymbol{R}_z \cdot \boldsymbol{R}_y \cdot \boldsymbol{R}_x$；
 
 - 动态轴（物体自身坐标系）：旋转轴随物体姿态变化（如机器人自身轴），旋转顺序为X→Y→Z，矩阵为 $\boldsymbol{R} = \boldsymbol{R}_x \cdot \boldsymbol{R}_y \cdot \boldsymbol{R}_z$。
 
